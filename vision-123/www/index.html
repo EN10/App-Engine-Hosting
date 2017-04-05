@@ -4,12 +4,21 @@
   </head>
   <body>
   <h1>Vision API</h1>
-  <p id="labels"></p></p>
-  <label>Image File:</label><br/>
+  <p id="link"></p>
+  Enter Server IP: <input id="ip" type="text"><p>
+  Image File:<br>
   <input type="file" id="imageLoader" name="imageLoader"/>
-  <canvas id="imageCanvas"></canvas>
+  <canvas id="imageCanvas"></canvas> <p>
+  Image URL: <input type="text" id="url">
+  <button onclick="url()">Generate Link</button>
   </body>
   <script>
+  function url() {
+    document.getElementById("link").innerHTML = '<a href='
+    + 'http://'+ document.getElementById("ip").value
+    + '/?url=' + document.getElementById("url").value
+    + '>Click to send URL</a>'
+  }
   var imageLoader = document.getElementById('imageLoader');
       imageLoader.addEventListener('change', handleImage, false);
   var canvas = document.getElementById('imageCanvas');
@@ -26,9 +35,10 @@
       img.src = event.target.result;
       var q = img.src
       while (q.indexOf("+") != -1) q = q.replace('+', '%2B');
-      document.getElementById("labels").innerHTML = '<a href='
-      + 'http://104.196.182.0/?img=' + q
-      + '>click to send image</a>'
+      document.getElementById("link").innerHTML = '<a href='
+      + 'http://'+ document.getElementById("ip").value
+      + '/?img=' + q
+      + '>Click to send Image</a>'
       }
       reader.readAsDataURL(e.target.files[0]);
   }
